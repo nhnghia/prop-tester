@@ -1,0 +1,67 @@
+<STGA initstate="0" name="Client">
+	<states>
+		<state name="0">
+			<freeVariables>
+				<variable>x0</variable>
+				<variable>x1</variable>
+			</freeVariables>
+		</state>
+		<state name="1">
+			<freeVariables>
+				<variable>x1</variable>
+			</freeVariables>
+		</state>
+		<state name="2">
+			<freeVariables>
+				<variable>x1</variable>
+			</freeVariables>
+		</state>
+		<state name="3">
+		</state>
+	</states>
+	<transitions>
+		<transition>
+			<source>0</source>
+			<destination>1</destination>
+			<guard/>
+			<event type="external">
+				<name>Request</name>
+				<sender>c</sender>
+				<receiver>s</receiver>
+				<direction>sending</direction>
+				<data>
+					<x0><![CDATA[weight]]></x0>
+				</data>
+			</event>
+		</transition>
+		<transition>
+			<source>1</source>
+			<destination>2</destination>
+			<guard/>
+			<event type="external">
+				<name>Response</name>
+				<sender>s</sender>
+				<receiver>c</receiver>
+				<direction>reception</direction>
+				<data>
+					<x2><![CDATA[price]]></x2>
+					<x3><![CDATA[fee]]></x3>
+				</data>
+			</event>
+		</transition>
+		<transition>
+			<source>2</source>
+			<destination>3</destination>
+			<guard/>
+			<event type="external">
+				<name>Confirm</name>
+				<sender>c</sender>
+				<receiver>s</receiver>
+				<direction>sending</direction>
+				<data>
+					<x1><![CDATA[card]]></x1>
+				</data>
+			</event>
+		</transition>
+	</transitions>
+</STGA>

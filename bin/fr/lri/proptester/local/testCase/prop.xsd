@@ -1,0 +1,49 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified">
+	<xs:element name="properties">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="namespaces" />
+				<xs:element maxOccurs="unbounded" ref="property" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="namespaces">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="namespace" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="namespace">
+		<xs:complexType>
+			<xs:attribute name="prefix" use="required" type="xs:NCName" />
+			<xs:attribute name="uri" use="required" type="xs:anyURI" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="property">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="context" />
+				<xs:element ref="consequence" />
+			</xs:sequence>
+			<xs:attribute name="distance" use="required" type="xs:integer" />
+			<xs:attribute name="name" use="required" type="xs:NCName" />
+			<xs:attribute name="type" use="required" type="xs:NCName" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="context" type="candidateEvent_1" />
+	<xs:element name="consequence" type="candidateEvent_1" />
+	<xs:complexType name="tEvent">
+		<xs:sequence>
+			<xs:element name="data" type="xs:string"></xs:element>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="optional"></xs:attribute>
+		<xs:attribute name="source" type="xs:string" use="optional"></xs:attribute>
+		<xs:attribute name="destination" type="xs:string" use="optional"></xs:attribute>
+		<xs:attribute name="direction" type="xs:string" use="optional"></xs:attribute>
+	</xs:complexType>
+	
+	<xs:element name="predicate" type="xs:string" />
+
+</xs:schema>

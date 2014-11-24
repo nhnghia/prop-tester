@@ -1,0 +1,78 @@
+<STGA initstate="0" name="Accounting department">
+	<states>
+		<state name="0">
+			<freeVariables>
+				<variable>z0</variable>
+			</freeVariables>
+		</state>
+		<state name="1">
+			<freeVariables>
+				<variable>z0</variable>
+				<variable>z1</variable>
+				<variable>z2</variable>
+			</freeVariables>
+		</state>
+		<state name="2">
+			<freeVariables>
+				<variable>z2</variable>
+				<variable>z3</variable>
+			</freeVariables>
+		</state>
+		<state name="3">
+		</state>
+	</states>
+	<transitions>
+		<transition>
+			<source>0</source>
+			<destination>1</destination>
+			<guard />
+			<event type="external">
+				<name>Commit</name>
+				<sender>s</sender>
+				<receiver>a</receiver>
+				<direction>reception</direction>
+				<data>
+					<z1><![CDATA[weight]]></z1>
+					<z2><![CDATA[card]]></z2>
+				</data>
+			</event>
+		</transition>
+		<transition>
+			<source>1</source>
+			<destination>2</destination>
+			<guard><![CDATA[z1 >= z0]]></guard>
+			<event type="internal">
+				<name>Tau</name>
+			</event>
+			<actions>
+				<action_1><![CDATA[z3 := z1*2]]></action_1>
+			</actions>
+		</transition>
+		<transition>
+			<source>1</source>
+			<destination>2</destination>
+			<guard><![CDATA[z1 < z0]]></guard>
+			<event type="internal">
+				<name>Tau</name>
+			</event>
+			<actions>
+				<action_1><![CDATA[z3 := z1*3]]></action_1>
+			</actions>
+		</transition>
+		<transition>
+			<source>2</source>
+			<destination>3</destination>
+			<guard />
+			<event type="external">
+				<name>Withdraw</name>
+				<sender>a</sender>
+				<receiver>b</receiver>
+				<direction>sending</direction>
+				<data>
+					<z2><![CDATA[card]]></z2>
+					<z3><![CDATA[amount]]></z3>
+				</data>
+			</event>
+		</transition>
+	</transitions>
+</STGA>

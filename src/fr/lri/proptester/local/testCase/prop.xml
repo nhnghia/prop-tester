@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<properties>
+	<namespaces>
+		<namespace prefix="m" uri="http://www.example.org/stock" />
+	</namespaces>
+	<property name="p1" type="negative" distance="2"
+		usedInGlobalProperty="true">
+		<context>
+			<candidateEvent>
+				<event name="Request" source="c" destination="s" direction="reception">
+					<data>
+						<x><![CDATA[weight]]></x>
+					</data>
+				</event>
+				<predicate><![CDATA[x > 0]]></predicate>
+			</candidateEvent>
+		</context>
+		<consequence>
+			<candidateEvent>
+				<event name="Response" source="s" destination="c" direction="sending">
+					<data>
+						<y><![CDATA[price]]></y>
+						<z><![CDATA[fee]]></z>
+					</data>
+				</event>
+				<predicate><![CDATA[z == x*y + 2]]></predicate>
+			</candidateEvent>
+		</consequence>
+	</property>
+</properties>

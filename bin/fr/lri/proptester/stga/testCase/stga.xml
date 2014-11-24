@@ -1,0 +1,82 @@
+<STGA initstate="s0" name="null">
+  <states>
+    <state name="s0">
+     <freeVariables>
+      	<variable>x</variable>
+      	<variable>y</variable>    
+     </freeVariables>   
+    </state>
+    <state name="s1">s1</state>
+    <state name="s2">s2</state>
+    <state name="s3">s3</state>
+    <state name="s4">s4</state>
+  </states>
+  <transitions>
+    <transition>
+      <source>s0</source>
+      <destination>s1</destination>
+      <guard><![CDATA[x >=    0]]></guard>
+      <event type="external">
+        <name>Send1</name>
+        <sender>emmetteur</sender>
+        <receiver>recepteur</receiver>
+        <direction>interaction</direction>
+        <data>
+          <price>y</price>
+          <weight>x</weight>
+        </data>
+      </event>
+      <actions>
+        <action_1><![CDATA[x0:=x1+4]]></action_1>
+        <action_2><![CDATA[x1:=0]]></action_2>
+        <action_3><![CDATA[x2:=0]]></action_3>
+      </actions>
+    </transition>
+    <transition>
+      <source>s1</source>
+      <destination>s2</destination>
+      <guard><![CDATA[x > 0]]></guard>
+      <event type="internal">
+        <name>tau</name>
+      </event>
+      <actions>
+        <action_1><![CDATA[x0:=0]]></action_1>
+        <action_2><![CDATA[x1:=0]]></action_2>
+        <action_3><![CDATA[x2:=0]]></action_3>
+      </actions>
+    </transition>
+    <transition>
+      <source>s2</source>
+      <destination>s3</destination>
+      <guard><![CDATA[x > 0]]></guard>
+      <event type="external">
+        <name>Send3</name>
+        <sender>emmetteur</sender>
+        <receiver>recepteur</receiver>
+        <direction>interaction</direction>
+        <data>
+          <price>y</price>
+          <weight>x</weight>
+        </data>
+      </event>
+      <actions>
+        <action_1><![CDATA[x0:=0]]></action_1>
+        <action_2><![CDATA[x1:=0]]></action_2>
+        <action_3><![CDATA[x2:=0]]></action_3>
+      </actions>
+    </transition>
+    <transition>
+      <source>s3</source>
+      <destination>s4</destination>
+      <guard><![CDATA[x > 0]]></guard>
+      <event type="internal">
+        <name>tau</name>
+      </event>
+      <actions>
+        <action_1><![CDATA[x0:=0]]></action_1>
+        <action_2><![CDATA[x1:=0]]></action_2>
+        <action_3><![CDATA[x2:=0]]></action_3>
+      </actions>
+    </transition>
+  </transitions>
+</STGA>

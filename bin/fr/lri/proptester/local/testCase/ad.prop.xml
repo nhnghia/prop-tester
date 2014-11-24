@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<properties>
+	<namespaces>
+		<namespace prefix="m" uri="http://www.example.org/stock" />
+	</namespaces>
+	<property name="p1" type="positive" distance="2"
+		usedInGlobalProperty="true">
+		<context>
+			<candidateEvent>
+				<event name="Commit" source="b" destination="b" direction="reception">
+					<data>
+						<x1><![CDATA[weight]]></x1>
+						<x2><![CDATA[card]]></x2>
+					</data>
+				</event>
+				<predicate><![CDATA[number(x) > 0]]></predicate>
+			</candidateEvent>
+		</context>
+		<consequence>
+			<candidateEvent>
+				<event name="Withdraw" source="a" destination="b" direction="sending">
+					<data>
+						<y2><![CDATA[card]]></y2>
+						<y1><![CDATA[amount]]></y1>
+					</data>
+				</event>
+				<predicate><![CDATA[x2 == y2 and (number(y1) == number(x1) * 3 or number(y1) == number(x1) * 4) ]]></predicate>
+			</candidateEvent>
+
+
+		</consequence>
+	</property>
+</properties>

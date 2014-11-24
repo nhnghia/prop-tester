@@ -1,0 +1,25 @@
+<STGA initstate="0" name="Bank center">
+	<states>
+		<state name="0">
+		</state>
+		<state name="1">
+		</state>
+	</states>
+	<transitions>
+		<transition>
+			<source>0</source>
+			<destination>1</destination>
+			<guard/>
+			<event type="external">
+				<name>Withdraw</name>
+				<sender>a</sender>
+				<receiver>b</receiver>
+				<direction>reception</direction>
+				<data>
+					<z1><![CDATA[card]]></z1>
+					<z2><![CDATA[amount]]></z2>
+				</data>
+			</event>
+		</transition>
+	</transitions>
+</STGA>

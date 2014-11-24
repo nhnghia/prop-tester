@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<properties>
+	<property name = "gp1" type = "negative">
+		<context>
+				<name>p1</name>
+				<name>p2</name>
+		</context>
+		<consequence>
+				<name>p2</name>
+		</consequence>
+	</property>
+	
+	<property name = "gp2" type = "positive">
+		<context>
+				<name>p1</name>
+				<name>p2</name>
+		</context>
+		<consequence>
+				<name>p3</name>
+		</consequence>
+	</property>
+</properties>

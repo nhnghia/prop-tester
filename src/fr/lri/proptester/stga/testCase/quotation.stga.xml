@@ -1,0 +1,146 @@
+<STGA initstate="0" name="Accounting department">
+	<states>
+		<state name="0">
+			<freeVariables>
+				<variable>y0</variable>
+			</freeVariables>
+		</state>
+		<state name="1">
+			<freeVariables>
+				<variable>y0</variable>
+				<variable>y1</variable>
+			</freeVariables>
+		</state>
+		<state name="2">
+			<freeVariables>
+				<variable>y1</variable>
+				<variable>y2</variable>
+			</freeVariables>
+		</state>
+		<state name="3">
+			<freeVariables>
+				<variable>y1</variable>
+				<variable>y2</variable>
+				<variable>y3</variable>
+			</freeVariables>
+		</state>
+		<state name="4">
+			<freeVariables>
+				<variable>y1</variable>
+			</freeVariables>
+		</state>
+		<state name="5">
+			<freeVariables>
+				<variable>y1</variable>
+				<variable>y4</variable>
+			</freeVariables>
+		</state>
+		<state name="6"/>
+	</states>
+	<transitions>
+		<transition>
+			<source>0</source>
+			<destination>1</destination>
+			<guard />
+			<event type="external">
+				<name>Request</name>
+				<sender>c</sender>
+				<receiver>s</receiver>
+				<direction>reception</direction>
+				<data>
+					<y1><![CDATA[weight]]></y1>
+				</data>
+			</event>
+		</transition>
+		<transition>
+			<source>1</source>
+			<destination>2</destination>
+			<guard><![CDATA[y1 >= y0]]></guard>
+			<event type="internal">
+				<name>Tau</name>
+			</event>
+			<actions>
+				<action_1><![CDATA[y2 := 2]]></action_1>
+			</actions>
+		</transition>
+		<transition>
+			<source>1</source>
+			<destination>2</destination>
+			<guard><![CDATA[y1 < y0]]></guard>
+			<event type="internal">
+				<name>Tau</name>
+			</event>
+			<actions>
+				<action_1><![CDATA[y2 := 3]]></action_1>
+			</actions>
+		</transition>
+		
+		<transition>
+			<source>2</source>
+			<destination>3</destination>
+			<event type="internal">
+				<name>Tau</name>
+			</event>
+			<actions>
+				<action_1><![CDATA[y3 := y2*y1]]></action_1>
+			</actions>
+		</transition>
+		
+		<transition>
+			<source>3</source>
+			<destination>4</destination>
+			<guard />
+			<event type="external">
+				<name>Response</name>
+				<sender>s</sender>
+				<receiver>c</receiver>
+				<direction>sending</direction>
+				<data>
+					<y2><![CDATA[price]]></y2>
+					<y3><![CDATA[fee]]></y3>
+				</data>
+			</event>
+		</transition>
+		
+		<transition>
+			<source>4</source>
+			<destination>6</destination>
+			<guard><![CDATA[time >= 1]]></guard>
+			<event type="internal">
+				<name>Tau</name>
+			</event>
+		</transition>
+		
+		<transition>
+			<source>4</source>
+			<destination>5</destination>
+			<guard><![CDATA[time < 1]]></guard>
+			<event type="external">
+				<name>Confirm</name>
+				<sender>c</sender>
+				<receiver>s</receiver>
+				<direction>reception</direction>
+				<data>
+					<y4><![CDATA[card]]></y4>
+				</data>
+			</event>
+		</transition>
+		
+		<transition>
+			<source>5</source>
+			<destination>6</destination>
+			<guard/>
+			<event type="external">
+				<name>Commit</name>
+				<sender>s</sender>
+				<receiver>a</receiver>
+				<direction>sending</direction>
+				<data>
+					<y1><![CDATA[weight]]></y1>
+					<y4><![CDATA[card]]></y4>
+				</data>
+			</event>
+		</transition>
+		
+	</transitions>
+</STGA>

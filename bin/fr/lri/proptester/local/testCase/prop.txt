@@ -1,0 +1,4 @@
++ p0 <GetStockPrice[a,b5]!(StockName=x)/(true)> a 0 {GetStockPrice[a,b7]!()/(true)} s
++ p1 <Query[s,b]?() / ()> s 0 {Result[s,b]!()/()} s
+- p2 <Query[s,b]?() / ()> s 4 {Result[s,b]!()/()} s
++ p3 <Request[c,s]?(weight=x)/()> c 2 {Query[s,b]!(price=y)/(x != y) ; Result[b,s]!(fee=z)/(true)} b

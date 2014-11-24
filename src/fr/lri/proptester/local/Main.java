@@ -40,8 +40,8 @@ public class Main {
 		if (Debug.isDebug())
 		{
 			args = new String[3];
-			args[0] = "/Users/nhnghia/these/code/java/fr.lri.proptester.local/evaluation/sipp/sip1.prop.xml";
-			args[1] = "file:///Users/nhnghia/these/SIPP/log/adhoc.server.4000.xml";
+			args[0] = "/Users/nhnghia/these/code/java/prop-tester/properties/tsc.xml";
+			args[1] = "http://hbs-accounting.appspot.com/log?raw";
 			args[2] = "-v"; //"-b"
 			//args[3] = "8082";
 			//args[4] = "-v";
@@ -90,7 +90,7 @@ public class Main {
 			}
 			
 			int n = propLst.size();
-			List<XQuery> queryLst = new ArrayList<XQuery>(n);
+			final List<XQuery> queryLst = new ArrayList<XQuery>(n);
 			
 			for (int i=0; i<n; i++){
 				Property p = propLst.get(i);
@@ -150,18 +150,38 @@ public class Main {
 			System.gc();
 			
 			
-			long t1 = System.currentTimeMillis();
-			int i=0; int d = 0;
+			final long t1 = System.currentTimeMillis();
+			
+			Runtime.getRuntime().addShutdownHook(new Thread() {
+				public void run() {
+					// Print statistic
+					for (XQuery q : queryLst)
+						q.printStat();
+
+					long t2 = System.currentTimeMillis();
+					long m = Runtime.getRuntime().totalMemory()
+							- Runtime.getRuntime().freeMemory();
+					float mm = (float) (m / (1024.0 * 1024));
+
+					System.out.println(String
+							.format("\n\nTime usage: %.3f (seconds), Memory usage: %.2f (Mega Bytes)",
+									(t2 - t1) / 1000.0, mm));
+					// System.out.println(String.format("%d, %.2f", (t2-t1),
+					// mm));
+				}
+			});
+
 			while (true){
+				System.out.println("\n Waiting for a message. Press Ctrl+C to break.\r");
 				msg = filter.getMessage();
+				
+				System.out.println(msg);
 				
 				//if msg == null ==> pass "null" to exits queries
 				for (XQuery q : queryLst){
 					q.putData(msg);
 				}
 				
-				if (msg == null)
-					break;
 				/*
 				i ++;
 				if (i==5000){
@@ -176,28 +196,6 @@ public class Main {
 				
 			}
 			
-			
-			//Wait all queries complete
-			Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
-			for (Thread t : threadSet){
-				if (t.getName().equals("Query") && t.isAlive())
-					t.join();
-			}
-			
-			//Print statistic
-			for (XQuery q : queryLst)
-				q.printStat();
-			
-			long t2 = System.currentTimeMillis();
-			long m = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
-			float mm = (float) (m / (1024.0 * 1024));
-			
-			System.out.println(String.format("\n\nTime usage: %.3f (seconds), Memory usage: %.2f (Mega Bytes)", (t2-t1)/1000.0, mm));
-			//System.out.println(String.format("%d, %.2f", (t2-t1), mm));
-			try{
-				broadcast.close();
-			}catch(Exception ex){}
-			
 		}catch (MXQueryException mx){
 			System.out.println("XQUERY ERROR: " + mx.getMessage());
 			fr.lri.schora.util.Debug.print(mx);
@@ -206,6 +204,8 @@ public class Main {
 		}catch (Exception ex){
 			System.out.println("ERROR: " + ex.getMessage());
 			fr.lri.schora.util.Debug.print(ex);
+		}finally{
+			
 		}
 	}
 	

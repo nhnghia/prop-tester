@@ -1,0 +1,17 @@
+<observation>
+<message name="book" direction="sending" tstamp="14168339921" time="2014-11-24 12:59:52:1" source="client" destination="hotel">
+<city>paris</city>
+<arr>1/1/2015</arr>
+<nights>6</nights>
+</message>
+<message name="info" direction="reception" tstamp="14168339923" time="2014-11-24 12:59:52:3" source="hotel" destination="client">
+<sid>54732bc800af6</sid>
+<room>testing</room>
+<fee>300</fee>
+</message>
+<message name="guest" direction="sending" tstamp="1416834026289" time="2014-11-24 13:00:26:289" source="client" destination="guest">
+<sid>54732bc800af6d</sid>
+<info>Nghia</info>
+<card>123</card>
+</message>
+</observation>

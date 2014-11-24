@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project prop-tester">
+    <!--this file was created by Eclipse Runnable JAR Export Wizard-->
+    <!--ANT 1.7 is required                                        -->
+    <target name="create_run_jar">
+        <jar destfile="/Users/nhnghia/temp/proptester-local.jar" filesetmanifest="mergewithoutmain">
+            <manifest>
+                <attribute name="Main-Class" value="fr.lri.proptester.local.Main"/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+            <fileset dir="/Users/nhnghia/these/code/java/prop-tester/bin"/>
+            <fileset dir="/Users/nhnghia/these/code/java/20120620-tools/bin"/>
+            <zipfileset excludes="META-INF/*.SF" src="/Users/nhnghia/soft/eclipse/plugins/org.junit_4.10.0.v4_10_0_v20120426-0900/junit.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/Users/nhnghia/soft/eclipse/plugins/org.hamcrest.core_1.1.0.v20090501071000.jar"/>
+            <fileset dir="/Users/nhnghia/these/code/java/fr.lri.symchor.expression/bin"/>
+            <zipfileset excludes="META-INF/*.SF" src="/Users/nhnghia/soft/eclipse/plugins/org.eclipse.core.runtime_3.8.0.v20120912-155025.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/Users/nhnghia/soft/eclipse/plugins/org.eclipse.osgi_3.8.2.v20130124-134944.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/Users/nhnghia/soft/eclipse/plugins/org.eclipse.equinox.common_3.6.100.v20120522-1841.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/Users/nhnghia/soft/eclipse/plugins/org.eclipse.core.jobs_3.5.300.v20120912-155018.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/Users/nhnghia/soft/eclipse/plugins/org.eclipse.core.runtime.compatibility.registry_3.5.101.v20130108-163257/runtime_registry_compatibility.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/Users/nhnghia/soft/eclipse/plugins/org.eclipse.equinox.registry_3.5.200.v20120522-1841.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/Users/nhnghia/soft/eclipse/plugins/org.eclipse.equinox.preferences_3.5.1.v20121031-182809.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/Users/nhnghia/soft/eclipse/plugins/org.eclipse.core.contenttype_3.4.200.v20120523-2004.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/Users/nhnghia/soft/eclipse/plugins/org.eclipse.equinox.app_1.3.100.v20120522-1841.jar"/>
+        	<zipfileset excludes="META-INF/*.SF" src="/Users/nhnghia/soft/eclipse/plugins/org.eclipse.emf.ecore.xmi_2.9.1.v20130827-0309.jar"/>
+        	<zipfileset excludes="META-INF/*.SF" src="/Users/nhnghia/soft/eclipse/plugins/org.eclipse.emf.ecore_2.9.1.v20130827-0309.jar"/>
+        	<zipfileset excludes="META-INF/*.SF" src="/Users/nhnghia/soft/eclipse/plugins/org.eclipse.emf.common_2.9.1.v20130827-0309.jar"/>
+            <fileset dir="/Users/nhnghia/these/code/java/SMT-API/bin"/>
+            <zipfileset excludes="META-INF/*.SF" src="/Users/nhnghia/these/code/java/prop-tester/lib/saxon9ee.jar"/>
+            <fileset dir="/Users/nhnghia/these/code/java/MXQuery/bin"/>
+            <zipfileset excludes="META-INF/*.SF" src="/Users/nhnghia/these/code/java/MXQuery/lib/tagsoup-1.2.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/Users/nhnghia/these/code/java/MXQuery/lib/jax-1_1-fr-qname-class.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/Users/nhnghia/these/code/java/MXQuery/lib/kxml2-min-2.3.0.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/Users/nhnghia/these/code/java/MXQuery/lib/xmlpull_1_1_3_4c.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/Users/nhnghia/these/code/java/MXQuery/lib/servlet-api.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/Users/nhnghia/these/code/java/MXQuery/lib/xqjapi.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/Users/nhnghia/these/code/java/MXQuery/lib/xercesImpl.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/Users/nhnghia/these/code/java/MXQuery/lib/commons-cli-1.2.jar"/>
+        </jar>
+    </target>
+</project>

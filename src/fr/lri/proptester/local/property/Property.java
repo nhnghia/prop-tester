@@ -19,6 +19,7 @@ import org.w3c.dom.NodeList;
 import fr.lri.proptester.stga.Communication;
 import fr.lri.proptester.stga.CommunicationType;
 import fr.lri.schora.expr.Condition;
+import fr.lri.schora.expr.ExprFactory;
 import fr.lri.schora.expr.Variable;
 import fr.lri.schora.expr.util.BoolExpression;
 
@@ -181,7 +182,7 @@ public class Property {
 					Element e3 = (Element) nLst.item(j);
 					String v = e3.getTagName();
 					if (com.data.containsKey(v)){
-						throw new Exception("Variable [" + v + "] is already defined");
+						throw new Exception("Variable [" + v + "] has been already defined");
 					}
 					else
 						com.data.put(v, e3.getTextContent());
@@ -227,13 +228,10 @@ public class Property {
 		for (String k : keys)
 			ns = String.format("%s declare namespace %s=\"%s\";\n", ns, k, namespaces.get(k));
 		
-		String preambleStr = String.format(
-				"for %s in $w/message[1] return ",
-					context.get(0).name
-				);
+		String preambleStr = "";
 		int n = context.size();
-		String spc = "  ";
-		for (int i=1; i<n; i++){
+		String spc = "";
+		for (int i=0; i<n; i++){
 			CandidateEvent ce = context.get(i);
 			
 			preambleStr = String.format(
@@ -264,13 +262,30 @@ public class Property {
 						  " tstamp=\"{current-dateTime()}\" " +
 						  " msg=\"{" + context.get(0).name + "/@tstamp}\"> {" +
 				(isPositive? "" : "\n not (") +
-				getXConsequent(spc) +
+				(numberOfMessage >= 0? getXConsequent(spc) : getXContextt(spc) )
+				+
 				(isPositive? "" : ")")  +
 				" }</message>"
 				;
 		return qStr;
 	}
 	
+
+	protected String getXContextt(String space)  throws Exception{
+		int psize = context.size();
+		List<String> lst = new ArrayList<String>();
+		for (CandidateEvent ce : context){
+			String str = String.format(
+					"\n%s (some %s in $w//message[position() > %d] satisfies (%s))",
+					space,
+					ce.name, 
+					psize,
+					event2XQuery(ce),
+					ce.name);
+			lst.add(str);
+		}
+		return fr.lri.schora.util.List.toString(lst, " and ");
+	}
 	
 	protected String getXConsequent(String space)  throws Exception{
 		int psize = context.size();
@@ -289,9 +304,30 @@ public class Property {
 	}
 
 	protected String getFirstCondition()  throws Exception{
-		CandidateEvent ce = context.get(0);
-		return String.format("\n 		start %s at $spos when (%s)", 
+		if (numberOfMessage >= 0){
+			CandidateEvent ce = context.get(0);
+			return String.format("\n 		start %s at $spos when (%s)", 
 				ce.name, event2XQuery(ce));
+		}else{
+			String cond = null;
+			for (CandidateEvent ce : consequence){
+				String tmp = ce.name;
+				ce.name = "$s";
+				
+				Condition con = ce.predicate;
+				ce.predicate = ExprFactory.eINSTANCE.createBTrue();
+				
+				if (cond == null)
+					cond = event2XQuery(ce);
+				else
+					cond = cond + " or "+ event2XQuery(ce);
+				
+				ce.predicate = con;
+				ce.name = tmp;
+			}
+			return String.format("\n 		start $s at $spos when (%s)", 
+					cond);
+		}
 	}
 	
 	/**
@@ -299,7 +335,7 @@ public class Property {
 	 * @return window size = size(context) + distance
 	 */
 	public int getLength(){
-		return context.size() + numberOfMessage;
+		return context.size() + Math.abs(numberOfMessage);
 	}
 	
 	public String event2XQuery(CandidateEvent ce)  throws Exception{

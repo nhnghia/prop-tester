@@ -21,16 +21,10 @@ public class MessageFilter {
 		
 		while (!(msgStr.contains("<message") && msgStr.contains("</message"))){
 			str = xml.readLine();
-			if (str == null)
-				break;
 			msgStr += str + "\n";
 		}
-		if (str == null)
-			return null;
 		//Since we use readline ==> msgStr may contains more than a message
 		int d = msgStr.indexOf("</message");
-		if (d == -1)
-			return null;
 		//Extract un message
 		d = msgStr.indexOf(">", d) + 1;
 		String msg = msgStr.substring(msgStr.indexOf("<message"), d);

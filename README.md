@@ -12,7 +12,9 @@ Overview
 
 The architecture of our online verification system is depicted by the image below. Each local tester is attached to a service to be tested. A local tester will collect input/output messages of its service at a point of observation (PO) which is put at a position such that all exchange messages from/to the service are captured. Based on collected log, the local tester will verify its local properties and give local verdict. Since the global properties consist of elements which are the same format with local properties so we use local testers to verify these elements, then the results will be used by the global tester to give verdict of global properties.
 
-{{ :tools:archpo.png?nolink&600 |}}
+
+![alt tag](https://github.com/nhnghia/prop-tester/raw/master/demo/arch.png)
+
 
 In our framework, the properties will be verified by 5 main steps:
 

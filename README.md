@@ -1,12 +1,14 @@
 
-======Online Verification of Value-Passing Choreographies through Property-Oriented Passive Testing (Prop-tester)======
+Online Verification of Value-Passing Choreographies through Property-Oriented Passive Testing (Prop-tester)
+==============
 
 This work is published in the proceeding of HASE’2012:
 
 - Huu Nghia Nguyen, Pascal Poizat and Fatiha Zaïdi. Online Verification of Value-Passing Choreographies through Property-Oriented Passive Testing. in HASE'2012 - IEEE International Symposium on High Assurance Systems Engineering. October 2012, to appear
 
 
-====Overview====
+Overview
+-------
 
 The architecture of our online verification system is depicted by the image below. Each local tester is attached to a service to be tested. A local tester will collect input/output messages of its service at a point of observation (PO) which is put at a position such that all exchange messages from/to the service are captured. Based on collected log, the local tester will verify its local properties and give local verdict. Since the global properties consist of elements which are the same format with local properties so we use local testers to verify these elements, then the results will be used by the global tester to give verdict of global properties.
 
@@ -28,19 +30,24 @@ The tool chain is downloaded here: {{:tools:prop-tester:prop-tester.zip|}}. This
 - ''%%globaltester.jar%%'': global tester
 - ''%%prop%%'': a folder that contains some example properties
 
-====Format of Properties====
+Format of Properties
+-------
 
-[[tools:prop-tester:property-format|Here]] is an example of local property. Each property is described in //<property><∕property>// tag. Namespaces using in these properties are declared in //<namespace><∕namespace>// tag. The boolean expression of each candidateEvent is a string //wrt.//  XPath syntax, describing in //<predicate></predicate>//. 
+[[tools:prop-tester:property-format|Here]] is an example of local property. Each property is described in //<property></property>// tag. Namespaces using in these properties are declared in //<namespace><∕namespace>// tag. The boolean expression of each candidateEvent is a string //wrt.//  XPath syntax, describing in //<predicate></predicate>//. 
 
-====Extract of Execution Traces====
+Extract of Execution Traces
+-------
+
 The implementation of //shipping choreography// in WS-BPEL can be found {{:tools:prop-tester:shippingchoreography.zip|here}}.
 We present our monitoring tool [[tools:soap-capturer|here]]. The captured SOAP messages are then put side by side. An example of a stream of well-form messages can be found here.
 
-====Local Tester====
+Local Tester
+-------
 
 Local tester can be run by
-
+``
 java -jar local-tester.jar propertyFile inputStreamURLMsg [-b:broadcastPort] [-v]
+``
 
 It takes as inputs 3 parameters:
 
@@ -54,7 +61,9 @@ Example:
 java -jar local-tester.jar /Users/tata/test/quotation.prop.xml http://localhost:8080/ode/processes/quotation -b:2020
 
 The verdict output in continuous stream mode, i.e. , a verdict is issued each time a property is tested.  [[tools:prop-tester:verdict|Here]] is of verdicts of a property ''p1''.
-====Global Tester====
+
+Global Tester
+-------
 
 Based on global property, the global tester synthesizes results of local testers to give global verdict. It can be run by
 

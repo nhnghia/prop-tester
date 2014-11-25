@@ -223,6 +223,9 @@ public class Property {
 		if (context == null || consequence == null || context.size() == 0 || consequence.size() == 0)
 			return "";
 		
+		if (numberOfMessage < 0)
+			return toXQueryNeg();
+		
 		String ns = "";
 		Set<String> keys = namespaces.keySet();
 		for (String k : keys)
@@ -236,7 +239,7 @@ public class Property {
 			
 			preambleStr = String.format(
 					"\n %s" +
-					"\n %s for %s in $w/message[%d] " +
+					"\n %s for %s in $w[%d] " +
 					"\n %s where %s " +
 					"\n %s return ",
 					preambleStr,
@@ -249,42 +252,100 @@ public class Property {
 		
 		String qStr = ns +  
 				"\n declare variable $stream external; " +
-				"\n for $w in (" +
-				"\n 	for sliding window $win in $stream//message" +
+				//"\n for $w in (" +
+				"\n for sliding window $w in $stream//message" +
 				getFirstCondition() + 
-				"\n		end   $e at $epos when $epos - $spos eq " + (getLength()-1) +
-				"\n 	return <window>{$win}</window>" +
-				"\n )" +
-				"\n return " +
+				"\n end   $e  at $epos when $epos - $spos eq " + (getLength()-1) +
+				//"\n 	return <window>{$win}</window>" +
+				//"\n )" +
+				" return " +
 				preambleStr +
 				"\n <message" +
 						  " prop=\""+ this.name +"\" " +
 						  " tstamp=\"{current-dateTime()}\" " +
-						  " msg=\"{" + context.get(0).name + "/@tstamp}\"> {" +
+						  " msg=\"{" + context.get(0).name + "/@tstamp}\">\n" +
+						  "{" +
 				(isPositive? "" : "\n not (") +
-				(numberOfMessage >= 0? getXConsequent(spc) : getXContextt(spc) )
+				 getXConsequent(spc) 
 				+
 				(isPositive? "" : ")")  +
-				" }</message>"
+				"\n}</message>"
 				;
 		return qStr;
 	}
 	
-
-	protected String getXContextt(String space)  throws Exception{
-		int psize = context.size();
+	/**
+	 * translate to xquery when numberOfMessage < 0
+	 * @return
+	 * @throws Exception
+	 */
+	private String toXQueryNeg()  throws Exception{
+		//hashTable = getVariableLable();
+		
+		if (context == null || consequence == null || context.size() == 0 || consequence.size() == 0)
+			return "";
+		
+		String ns = "";
+		Set<String> keys = namespaces.keySet();
+		for (String k : keys)
+			ns = String.format("%s declare namespace %s=\"%s\";\n", ns, k, namespaces.get(k));
+		
+		String preambleStr = "";
+		int n = context.size();
+		String spc = "";
+		for (int i=0; i<n; i++){
+			CandidateEvent ce = context.get(i);
+			
+			preambleStr = String.format(
+					"\n %s" +
+					"\n %s for %s in $w[%d] " +
+					"\n %s where %s " +
+					"\n %s return ",
+					preambleStr,
+					spc, ce.name, (i+1),
+					spc, event2XQuery(ce),
+					spc
+					);
+			spc += "   ";
+		}
+		
+		String qStr = ns +  
+				"\n declare variable $stream external; " +
+				"\n let $win  := (for sliding window $win in $stream//message" +
+				getFirstCondition() + 
+				"\n         end   $e at $epos when $epos - $spos eq " + (getLength()-1) +
+				"\n         return <window>{$win}</window>)" +
+				"\n for sliding window $w in $win " +
+				"\n   start at $s when $s > 1" +
+				"\n   end   at $e when $e - $s eq " + (context.size() - 1) + 
+				"\n return " +
+				preambleStr +
+				"\n <message" +
+				" prop=\""+ this.name +"\" " +
+				" tstamp=\"{current-dateTime()}\" " +
+				" msg=\"{" + context.get(0).name + "/@tstamp}\">" +
+				"\n{" +
+				(isPositive? "" : "\n not (") +
+				getXConsequentNeg(spc)
+				+
+				(isPositive? "" : ")")  +
+				"\n }</message>"
+				;
+		return qStr;
+	}
+	
+	protected String getXConsequentNeg(String space)  throws Exception{
 		List<String> lst = new ArrayList<String>();
 		for (CandidateEvent ce : context){
 			String str = String.format(
-					"\n%s (some %s in $w//message[position() > %d] satisfies (%s))",
+					"\n%s (some %s in $win[0] satisfies (%s))",
 					space,
 					ce.name, 
-					psize,
 					event2XQuery(ce),
 					ce.name);
 			lst.add(str);
 		}
-		return fr.lri.schora.util.List.toString(lst, " and ");
+		return fr.lri.schora.util.List.toString(lst, " or ");
 	}
 	
 	protected String getXConsequent(String space)  throws Exception{
@@ -292,7 +353,7 @@ public class Property {
 		List<String> lst = new ArrayList<String>();
 		for (CandidateEvent ce : consequence){
 			String str = String.format(
-					"\n%s (some %s in $w//message[position() > %d] satisfies (%s))",
+					"\n%s (some %s in $w[position() > %d] satisfies (%s))",
 					space,
 					ce.name, 
 					psize,
@@ -306,7 +367,7 @@ public class Property {
 	protected String getFirstCondition()  throws Exception{
 		if (numberOfMessage >= 0){
 			CandidateEvent ce = context.get(0);
-			return String.format("\n 		start %s at $spos when (%s)", 
+			return String.format("\n start %s at $spos when (%s)", 
 				ce.name, event2XQuery(ce));
 		}else{
 			String cond = null;

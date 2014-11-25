@@ -40,8 +40,8 @@ public class Main {
 		if (Debug.isDebug())
 		{
 			args = new String[3];
-			args[0] = "/Users/nhnghia/these/code/java/prop-tester/properties/tsc.xml";
-			args[1] = "http://hbs-accounting.appspot.com/log?raw";
+			args[0] = "/Users/nhnghia/these/code/java/prop-tester/properties/tsc-hotel.xml";
+			args[1] = "http://ec2-54-69-171-251.us-west-2.compute.amazonaws.com/hbs/log.php?raw";
 			args[2] = "-v"; //"-b"
 			//args[3] = "8082";
 			//args[4] = "-v";
@@ -170,12 +170,12 @@ public class Main {
 					// mm));
 				}
 			});
-
+			System.out.println();
 			while (true){
-				System.out.println("\n Waiting for a message. Press Ctrl+C to break.\r");
+				System.out.print("Waiting for a message. Press Ctrl+C to break.\r");
 				msg = filter.getMessage();
-				
-				System.out.println(msg);
+				System.out.print("                                                              ");
+				//System.out.println(msg);
 				
 				//if msg == null ==> pass "null" to exits queries
 				for (XQuery q : queryLst){

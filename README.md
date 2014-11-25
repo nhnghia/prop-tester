@@ -22,20 +22,20 @@ In our framework, the properties will be verified by 5 main steps:
 - **Correctness of property.** If specification model of IUT is available, then the properties will be then formally verified on the model guaranteeing that they are correct wrt.  the requirements.
 - **Translating property into XQuery.** A property is translated into an XQuery such that it returns false iff the property is violated, and true iff the property is validated. The Inconclusive verdict of the property will be delivered by tester when it found the end of stream of the log and no verdict was delivered before.
 - **Extraction of execution traces.** An observer is put at each service to sniff all of its (input and output) messages exchange with its partners. Each time the observer captured a message, if the message relates to properties tested, then it is sent a pipe whose other end, where it will be verified, is an XQuery processor.
-- **Properties tested on the traces.** The properties tested in XQuery form will be executed by MXQuery (http://mxquery.org) processor on the XML stream supplying by the observer. Based on result of the query, the verdict (Pass, Fail, Maybe, or Inconclusive) will be delivered.
+- **Properties tested on the traces.** The properties tested in XQuery form will be executed by MXQuery (http://mxquery.org) processor on the XML stream supplying by the observer. Based on result of the query, the verdict (Pass, Fail, or Inconclusive) will be delivered.
 
 In this verification, the step 1, 2 and 3 are done only one time, while the step 4 and 5 are done on real time. We will present our tools supporting these verification: a tool for capturing SOAP message, local tester, and global tester.
 
-The tool chain is downloaded here: {{:tools:prop-tester:prop-tester.zip|}}. This consists of three tools:
+The tool chain is downloaded here: https://github.com/nhnghia/prop-tester/tree/master/distribution. This consists of three tools:
 
-- ``localtester.jar``: local tester of each separate Web Service
-- ``globaltester.jar``: global tester
-- ``prop``: a folder that contains some example properties
+- ``proptester-local.jar``: local tester of each separate Web Service
+- ``proptester-global.jar``: global tester
 
 Format of Properties
 -------
 
-[[tools:prop-tester:property-format|Here]] is an example of local property. Each property is described in //<property></property>// tag. Namespaces using in these properties are declared in //<namespace><∕namespace>// tag. The boolean expression of each candidateEvent is a string //wrt.//  XPath syntax, describing in //<predicate></predicate>//. 
+Some examples of local property can be found here https://github.com/nhnghia/prop-tester/tree/master/properties. 
+Each property is described in //<property></property>// tag. Namespaces using in these properties are declared in //<namespace><∕namespace>// tag. The boolean expression of each candidateEvent is a string //wrt.//  XPath syntax, describing in //<predicate></predicate>//. 
 
 Extract of Execution Traces
 -------
@@ -73,7 +73,7 @@ Global Tester
 Based on global property, the global tester synthesizes results of local testers to give global verdict. It can be run by
 
 ``
-java -jar global-tester.jar propertyFile inputStreamURL1 … inputStreamURLn  [-b:broadcastPort] [-v]
+java -jar global-tester.jar propertyFile inputStreamURL1 �..., inputStreamURLn  [-b:broadcastPort] [-v]
 ``
 
 It takes as inputs the following parameters:

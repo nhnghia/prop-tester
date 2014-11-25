@@ -29,6 +29,9 @@ public class Main {
 	 * @param args
 	 * Verif PO inputStreamURL outputStreamURL
 	 */
+	/**
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		if (args.length < 2){
 			help();
@@ -78,7 +81,7 @@ public class Main {
 			
 			//Translate to XQuery
 			int n = propLst.size();
-			List<XQuery> queryLst = new ArrayList<XQuery>(n);
+			final List<XQuery> queryLst = new ArrayList<XQuery>(n);
 			
 			for (int i=0; i<n; i++){
 				String str = propLst.get(i).toXQuery();
@@ -112,6 +115,17 @@ public class Main {
 			
 			fr.lri.schora.util.Stat.start();
 			
+			Runtime.getRuntime().addShutdownHook(new Thread() {
+				public void run() {
+					// Print statistic
+					for (XQuery q : queryLst)
+						q.printStat();
+
+					fr.lri.schora.util.Stat.end();
+				}
+			});
+			
+			
 			int i=0; int d = 0;
 			while (true){
 				msg = lc.getResult();
@@ -136,22 +150,18 @@ public class Main {
 			
 			
 			//Wait all queries complete
-			Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
-			for (Thread t : threadSet){
-				if (t.getName().equals("Query") && t.isAlive())
-					t.join();
-			}
+//			Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
+//			for (Thread t : threadSet){
+//				if (t.getName().equals("Query") && t.isAlive())
+//					t.join();
+//			}
+//			
 			
-			for (XQuery q : queryLst){
-				q.printStat();
-			}
-			
-			fr.lri.schora.util.Stat.end();
 			
 			//System.out.println(String.format("%d, %.2f", (t2-t1), mm));
-			try{
-				broadcast.close();
-			}catch(Exception ex){}
+//			try{
+//				broadcast.close();
+//			}catch(Exception ex){}
 			
 		}catch (MXQueryException mx){
 			System.out.println("XQUERY ERROR: " + mx.getMessage());

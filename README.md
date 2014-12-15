@@ -2,9 +2,9 @@
 Prop-tester
 ==============
 
-This work is published in the proceeding of HASE’2012:
+This work was published in the proceeding of HASE'2012:
 
-- Huu Nghia Nguyen, Pascal Poizat and Fatiha Zaïdi. Online Verification of Value-Passing Choreographies through Property-Oriented Passive Testing. in HASE'2012 - IEEE International Symposium on High Assurance Systems Engineering. October 2012, to appear
+- Huu Nghia Nguyen, Pascal Poizat and Fatiha Za�di. Online Verification of Value-Passing Choreographies through Property-Oriented Passive Testing. in HASE'2012 - IEEE International Symposium on High Assurance Systems Engineering. October 2012, to appear
 
 
 Overview
@@ -35,7 +35,7 @@ Format of Properties
 -------
 
 Some examples of local property can be found here https://github.com/nhnghia/prop-tester/tree/master/properties. 
-Each property is described in //<property></property>// tag. Namespaces using in these properties are declared in //<namespace><∕namespace>// tag. The boolean expression of each candidateEvent is a string //wrt.//  XPath syntax, describing in //<predicate></predicate>//. 
+Each property is described in //<property></property>// tag. Namespaces using in these properties are declared in //<namespace></namespace>// tag. The boolean expression of each candidateEvent is a string //wrt.//  XPath syntax, describing in //<predicate></predicate>//. 
 
 Extract of Execution Traces
 -------

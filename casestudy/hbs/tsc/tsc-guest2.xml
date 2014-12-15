@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<properties>
+	<property name="p1" type="positive" distance="1"
+		usedInGlobalProperty="true">
+		<context>
+			<candidateEvent>
+				<event name="room" source="hotel" destination="guest" direction="reception">
+					<data>
+						<x>nights</x>
+						<z1>sid</z1>
+					</data>
+				</event>
+				<predicate><![CDATA[x > 0]]></predicate>
+			</candidateEvent>
+			<candidateEvent>
+				<event name="guest" source="client" destination="guest" direction="reception">
+					<data>
+						<z2>sid</z2>
+					</data>
+				</event>
+				<predicate><![CDATA[z1 == z2]]></predicate>
+			</candidateEvent>
+		</context>
+		<consequence>
+			<candidateEvent>
+				<event name="commit" source="guest" destination="account" direction="sending">
+					<data>
+						<y><![CDATA[amount]]></y>
+					</data>
+				</event>
+				<predicate><![CDATA[(y == x*50 or y == x*70)]]></predicate>
+			</candidateEvent>
+		</consequence>
+	</property>
+</properties>

@@ -1,2 +1,2 @@
-A Case study of Hotel Booking System
+Properties to test HBS
 ================  

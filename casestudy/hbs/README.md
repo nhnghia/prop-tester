@@ -29,7 +29,7 @@ Their execution logs are availabel at:
 
 ## Test
 
-1. ***Download testers** at https://github.com/nhnghia/prop-tester/tree/master/distribution
+1. **Download testers** at https://github.com/nhnghia/prop-tester/tree/master/distribution
 2. **Download properties** to test these services at https://github.com/nhnghia/prop-tester/tree/master/casestudy/hbs/tsc
 3. **Startup testers**
 4. **Startup HBS** http://hbs-nhnghia.rhcloud.com

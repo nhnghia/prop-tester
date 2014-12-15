@@ -9,7 +9,7 @@ Overview
 
 The behaviors of these services are modeled as in Figure below:
 
-![alt tag](https://github.com/nhnghia/prop-tester/raw/master/casestudy/hbs/services.png)
+![alt tag](https://github.com/nhnghia/prop-tester/raw/master/casestudy/hbs/figs/services.png)
 
 Particularly, the //client//, on behalf of users intending to book a
 room, issues a //book// request to the //hotel// service with indicating 
